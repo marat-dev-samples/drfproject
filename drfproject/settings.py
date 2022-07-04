@@ -152,6 +152,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:8000', # Nginx backend container
     'http://localhost:80',   # Nginx backend container
+    'http://194.67.109.184',
 ]
 
 CORS_ORIGIN_WHITELIST = [
@@ -159,6 +160,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://localhost:8000', # Nginx backend container
     'http://localhost:80',   # Nginx backend container
+    'http://194.67.109.184',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -166,6 +168,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:8000', # Nginx backend container
     'http://localhost:80',   # Nginx backend container
+    'http://194.67.109.184',
 ]
 
 
