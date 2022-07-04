@@ -22,14 +22,14 @@ const ProjectRow = ({project}) => {
         {project.projectName}
       </td>
       <td>
-        <a href={project.repoLink} target="out">{project.repoLink}</a>
+        {project.repoLink}
       </td>
       <td>
       <Link
         to={`/project/info`}
         state={{from: value, url: project.url, project: project}}
       >
-        View
+        Open
       </Link>
       </td>
     </tr>
@@ -48,16 +48,11 @@ class ProjectList extends React.Component {
     }
     this.update = this.update.bind(this);  
     this.newProjectRequest = this.newProjectRequest.bind(this);  
-   
-    this.delProject = this.delProject.bind(this);  
-     
   }
 
   componentDidMount() {
-    console.log('> Component mounted')
     this.update()
     return
-    //this.setState({'data': projects.results})
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -81,11 +76,6 @@ class ProjectList extends React.Component {
     }).catch(error => console.log('> Create error ' + error))
   }
   
-  delProject() {
-    console.log('> Delete project request')
-  }
-
-
   render() {
     const projects = this.state.data
  
@@ -103,7 +93,7 @@ class ProjectList extends React.Component {
              Repo link
            </th>
           <th>
-            Url link
+            View
           </th>
         </tr>
         </thead>
@@ -234,7 +224,7 @@ function AddNoteModal(props) {
     <>
       <center>
       <Button size="sm" variant="primary" onClick={() => handleShow()}>
-        Project ToDo
+        New ToDo
       </Button>
       </center>
       <Modal show={show} onHide={handleClose}>
@@ -352,30 +342,39 @@ const Project = () => {
   return (
     <div>
       <br/>
-      <h3><center>Project</center></h3>
+      <h3><center>Project {project.projectName}</center></h3>
       <h5>Project info</h5>
       <ul>
         <li>
-          <span>Project name: {project.projectName}</span>
+          <span>Name: {project.projectName}</span>
         </li>
         <li>
           <span>Users: {project.users}</span>
         </li>
         <li>
-          <span>Project resource url: {location.state.url}</span>
+          <span>URL: {location.state.url}</span>
         </li>
 
       </ul>
+      <hr></hr>
+      <div className="todo-box-footer">
+        <div>
         <SubmitModal 
           buttonText="Delete project"
           dialog="Do you really want to delete project?"
           onSubmit={() => delProject(project.projectId)} 
         />
-      <div>
-        <AddNoteModal project={project} onSubmit={(note) => getNew(note)} />   
+        </div>
+        <div>
+        <AddNoteModal 
+          project={project} 
+          onSubmit={(note) => getNew(note)} 
+        />   
+        </div>
       </div>   
-      <br/>
       <hr></hr>
+      
+
       <h5>Project active notes (received via GraphQl request)</h5>
       <ul>
         {notes.map((item, key) => (<li><span key={key}> {item.status}: {item.text}</span></li>))}

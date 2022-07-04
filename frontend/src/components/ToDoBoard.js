@@ -37,42 +37,12 @@ import restApiClient from  '../restapi.js'
  */ 
 
 
-
-
-/** 
- * This must be resolved from request
- */ 
-const todo1 = [
-    
-    {
-        "url": "http://127.0.0.1:8000/api/todo/1/",
-        "project": 2,
-        "customer": 1,
-        "text": "Note append from John Doe",
-        "created": "2022-05-17T07:16:00Z",
-        "updated": "2022-05-29T14:24:45.487339Z",
-        "status": "Active",
-        "camelCaseField": "Updated value"
-    },
-    {
-        "url": "http://127.0.0.1:8000/api/todo/8/",
-        "project": 2,
-        "customer": 2,
-        "text": "I am new from Luke Skywalker note appended again",
-        "created": "2022-05-28T19:56:16.266737Z",
-        "updated": "2022-05-29T14:10:20.485456Z",
-        "status": "Active",
-        "camelCaseField": "values"
-    }
-]
-
-// Comment
-
 const colors = {
   'Normal': '#00c0d6', 
   'Urgent': '#fdfe46',
   'Delayed': '#e8e8e8' 
 }
+
 const statuses = ['Active', 'Progress', 'Done', 'Closed'];
 
 function EditNoteModal(props) {
@@ -99,28 +69,30 @@ function EditNoteModal(props) {
 
   return (
     <>
-
       <Button size="sm" variant="primary" onClick={() => handleShow()}>
         Edit
       </Button>
-      
-
       <Modal show={show} onHide={handleClose}>
         <div className="modal-header bg-primary">
           <h5 className="modal-title text-white" id="exampleModalLabel">
           Edit note of project: {note.project}
           </h5>
         </div>
-        
         <Modal.Body>
           <label className="form-check-label">
             <b>Text</b>
           </label>
           
           <form>
-            <textarea className="form-control" id="noteText" rows="4" value={note.text} onChange={set('text')} />
+            <textarea 
+              className="form-control" 
+              id="noteText" 
+              rows="10" 
+              cols="20"
+              value={note.text} 
+              onChange={set('text')} 
+            />
           </form>
-         
           <br/>
           <label className="form-check-label">
             <b>Status</b>
@@ -133,7 +105,6 @@ function EditNoteModal(props) {
               return <Button key={key} value={status} onClick={set('status')} variant={variant}>{status}</Button>
             })}
           </ButtonGroup>   
-
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -244,6 +215,8 @@ class Note extends React.Component {
    */
   noteDelete() {
     //const payload = {status: data.status, text: data.text}
+    
+
     restApiClient.del(this.state.resource).then(
       (response) => this.props.refresh()    
     ).catch(error => console.log('> Update error ' + error))
@@ -262,19 +235,27 @@ class Note extends React.Component {
      
     return (
         <div className="todo-box">
-          <b>{note.projectStr}</b>
+          <div className="todo-box-header">
+            <b>{note.projectStr}</b>
+          </div>
+          <div className="todo-box-body">  
+            {note.text}
+          </div>
           <hr/>
-          {note.text}
-          <br/>
-          
           <div className="todo-box-footer"> 
             <div> 
-              <EditNoteModal note={note} onSubmit={(data)=>this.noteUpdate(data)} />   
+              <EditNoteModal 
+                note={note} 
+                onSubmit={(data)=>this.noteUpdate(data)} 
+              />   
             </div> 
             <div>
-            <DelNoteModal note={note} onSubmit={()=>this.noteDelete()} />   
-              </div>
+              <DelNoteModal 
+                note={note} 
+                onSubmit={()=>this.noteDelete()} 
+              />   
             </div>
+          </div>
         </div>
     )
   } 

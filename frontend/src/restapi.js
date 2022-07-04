@@ -132,8 +132,6 @@ class ToDoApi {
   handleRequest = (request) => {
     request.headers.Authorization = `Bearer ${this.tokenService.getLocalAccessToken()}`
     request.headers.common.Accept = '*/*;version=2.0'
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log(request)
     return request
   }
 

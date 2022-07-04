@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link, useLocation} from 'react-router-dom'
+import { Table, Button } from 'react-bootstrap';
 
 // Rest api clent instance (axios based)
 import restApiClient from '../restapi.js'
@@ -9,22 +10,22 @@ const users = [
     {
         "id": 1,
         "username": "admin",
-        "first_name": "John",
-        "last_name": "Doe",
+        "firstName": "John",
+        "lastName": "Doe",
         "email": "admin@gmail.com"
     },
     {
         "id": 2,
         "username": "luke",
-        "first_name": "Luke",
-        "last_name": "Skywalker",
+        "firstName": "Luke",
+        "lastName": "Skywalker",
         "email": "lukeskywalker@gmail.com"
     },
     {
         "id": 3,
         "username": "R2D2",
-        "first_name": "R2",
-        "last_name": "D2",
+        "firstName": "R2",
+        "lastName": "D2",
         "email": "droid@gmail.com"
     }
 ]
@@ -37,13 +38,13 @@ const UserRow = ({user}) => {
   return (
     <tr key={user.id}>
       <td>
-        {user.first_name}
+        {user.firstName}
       </td>
       <td>
-        {user.last_name}
+        {user.lastName}
       </td>
       <td>
-        {user.birthday_year}
+        {user.birthdayYear}
       </td>
       </tr>
   )
@@ -57,68 +58,42 @@ class UserList extends React.Component {
     super(props)
     this.state = {
       'data': [],
-      'title': 'Users List',
+      'title': 'Customers',
     }
     this.update = this.update.bind(this);  
   }
 
   componentDidMount() {
-    this.setState({'data': users})
+    this.update();  
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    //console.log(nextProps);
-    //console.log(nextState);
-    //console.log(this.state)
-    
-    //if (nextState != this.state) {
-    //  console.log(nextState);
-    //  console.log(this.state)
-    //  console.log('>>>true')
-    //  return true;
-    //}
-
     return true;
   }
 
-
-
-
   update() {
-    
-
-    //console.log('update')
+    //return
+    console.log('update')
     const resource = 'customers'
-
     restApiClient.get(resource).then(
       (response) => this.setState({'data': response.data.results})
     ).catch(error => console.log('> Update error ' + error))
-    
     return
-
-
-
-    
   } 
-
 
   render() {
     const users = this.state.data
- 
     return (
       <div>
         <h3><center>{this.state.title}</center></h3>
-        <Link to={{}} onClick={() => this.update()} >
-          Update
-        </Link>
-        <table className="data-table">
+        <Table striped bordered hover className="data-table">
          <thead>
          <tr>
            <th>
-             First name
+            First name
            </th>
            <th>
-             Last Name
+            Last Name
            </th>
           <th>
             Birthday year
@@ -128,7 +103,12 @@ class UserList extends React.Component {
         <tbody>
          {users.map((user, i) => <UserRow user={user} key={i} />)}
        </tbody>
-       </table>
+       </Table>
+       <center>
+        <Button size="sm" variant="primary" onClick={() => this.update()} >
+          Update
+        </Button>
+       </center> 
       </div>
     )
   }
