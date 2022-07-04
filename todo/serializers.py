@@ -44,7 +44,7 @@ class NoteModelSerializer(HyperlinkedModelSerializer):
     owner = serializers.StringRelatedField(many=False)
     contact = serializers.SerializerMethodField('owner_contact')
     project_str = serializers.SerializerMethodField('project_name')
-
+    #resource = serializers.SerializerMethodField('api_resource')
 
 
     class Meta:
@@ -73,8 +73,11 @@ class NoteModelSerializer(HyperlinkedModelSerializer):
         if obj.project:
             return str(obj.project)
  
-        
-
+    #def api_resource(self, obj):
+    #    print(dir(obj))
+    #    #if obj.owner:
+    #    #    return obj.owner.email
+    #    return 'resource'
 
     '''
     # Deprecated
