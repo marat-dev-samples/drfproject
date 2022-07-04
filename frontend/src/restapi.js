@@ -23,6 +23,8 @@ class ToDoApi {
     this.baseURL = window.location.protocol + '//' + window.location.hostname + ':8000/api/';
     console.log('> Api host ' + this.baseURL)      
 
+
+
     this.refreshURL = this.baseURL + 'token/refresh/';
     this.loginURL = '#/login';
     this.csrftoken = null;
