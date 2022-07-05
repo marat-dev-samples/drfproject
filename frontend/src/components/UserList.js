@@ -51,7 +51,6 @@ const UserRow = ({user}) => {
 }
 
 
-
 class UserList extends React.Component {
   
   constructor(props) {
